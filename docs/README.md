@@ -13,3 +13,7 @@ Index for the `fixture-rust` service, a layered Rust + axum item CRUD API.
 ## Contracts
 
 - [OpenAPI](openapi.json) is the generated HTTP contract for the endpoints. Regenerate it with `just spec`.
+
+## Exceptions
+
+- [Exceptions](exceptions.md) records the standard rules this repository does not meet yet.

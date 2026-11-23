@@ -1,8 +1,8 @@
 //! Keeps `docs/openapi.json` in step with the derived document and checks the
 //! two contract details the OpenAPI shape must hold.
 
-use serde_json::Value;
 use fixture_rust::openapi;
+use serde_json::Value;
 
 /// The document exactly as `just spec` writes it.
 fn generated() -> String {

@@ -11,7 +11,7 @@ A layered Rust + axum item CRUD service. It is the Rust fixture for the fleet st
 
 ## Commands
 
-- `just install`, `just deps`, `just lint`, `just lint-fix`, `just aislop`, `just test`, `just coverage`, `just spec`, `just serve`, `just verify`, `just prune`.
+- `just install`, `just deps`, `just fmt-check`, `just lint`, `just lint-fix`, `just complexity`, `just aislop`, `just test`, `just coverage`, `just spec`, `just check`, `just serve`, `just hooks`, `just agent-files`, `just prune`.
 
 ## Repo facts
 
@@ -20,7 +20,9 @@ A layered Rust + axum item CRUD service. It is the Rust fixture for the fleet st
 - Data: no database. `src/item/store.rs` holds a `BTreeMap` behind a `Mutex` and seeds three items on construction.
 - Domain: `GET`, `POST`, `PUT`, and `DELETE` over `/items`. Reads, updates, and deletes of an unknown id return a domain `ItemError::NotFound` that `src/item/api.rs` maps to a 404 `application/problem+json` body.
 - Contracts: `docs/openapi.json` is generated from the handlers and the DTOs. Regenerate it with `just spec`.
-- Docs: `docs/README.md` indexes the architecture, the items feature, and the OpenAPI contract.
+- Docs: `docs/README.md` indexes the architecture, the items feature, and the OpenAPI contract. `docs/exceptions.md` records the standard rules this repository does not meet yet.
+- Hooks: `just hooks` points `core.hooksPath` at `.githooks`, whose `pre-push` refuses a push to `main`. The ruleset is the real gate.
+- Agent files: `just agent-files` checks `.agents/skills` and its `.claude/skills` links. This repository has no repo-local skills.
 - Windows build: the GNU target needs MinGW binutils (`dlltool`, `as`, `ld`) on `PATH` or `cargo test` fails with `dlltool.exe: program not found`. `cargo llvm-cov` cannot run on the Windows GNU host (E0463, no `libprofiler_builtins`), so run `just coverage` in CI only.
 
 ## Skills
