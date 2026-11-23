@@ -15,6 +15,9 @@
 "cargo:cargo-llvm-cov" = "0.9.1"
 node = "26"
 
+# AI-slop gate, pinned so CI resolves no version at run time (C7.2).
+"npm:aislop" = "0.16.1"
+
 # Rust toolchain with the components the lint and coverage recipes need. On
 # Windows the GNU host is selected because it links without a Visual Studio
 # install; Linux and macOS use the default host.
