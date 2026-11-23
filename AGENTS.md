@@ -21,7 +21,7 @@ A layered Rust + axum item CRUD service. It is the Rust fixture for the fleet st
 - Domain: `GET`, `POST`, `PUT`, and `DELETE` over `/items`. Reads, updates, and deletes of an unknown id return a domain `ItemError::NotFound` that `src/item/api.rs` maps to a 404 `application/problem+json` body.
 - Contracts: `docs/openapi.json` is generated from the handlers and the DTOs. Regenerate it with `just spec`.
 - Docs: `docs/README.md` indexes the architecture, the items feature, and the OpenAPI contract. `docs/exceptions.md` records the standard rules this repository does not meet yet.
-- Hooks: `just hooks` points `core.hooksPath` at `.githooks`, whose `pre-push` refuses a push to `main`. The ruleset is the real gate.
+- Hooks: `just hooks` installs the shared Lefthook jobs from `simpsonm09-projects/.github` at the `hooks-v3` tag; `lefthook-local.yml` is git-ignored. Never skip a hook: no `LEFTHOOK=0`, no `--no-verify`, and never create `lefthook-local.yml` (C7.11). The ruleset is the real gate.
 - Agent files: `just agent-files` checks `.agents/skills` and its `.claude/skills` links. This repository has no repo-local skills.
 - Windows build: the GNU target needs MinGW binutils (`dlltool`, `as`, `ld`) on `PATH` or `cargo test` fails with `dlltool.exe: program not found`. `cargo llvm-cov` cannot run on the Windows GNU host (E0463, no `libprofiler_builtins`), so run `just coverage` in CI only.
 
