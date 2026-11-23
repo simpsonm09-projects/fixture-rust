@@ -15,6 +15,14 @@ install:
 deps:
     mise exec -- cargo fetch
 
+# Format the Rust sources with rustfmt.
+fmt:
+    mise exec -- cargo fmt
+
+# Fail when a Rust source is not rustfmt-formatted.
+fmt-check:
+    mise exec -- cargo fmt --check
+
 # Run every linter over the tracked files.
 lint:
     mise exec -- flint run --full
@@ -44,12 +52,28 @@ coverage:
 spec:
     mise exec -- cargo run --quiet --bin write-openapi
 
+# Fail when the generated API document differs from the code.
+spec-check:
+    just spec
+    git diff --exit-code -- docs/openapi.json
+
 # Serve the API on http://127.0.0.1:3000.
 serve:
     mise run serve
 
-# Lint and test.
-verify: lint test
+# Everything CI requires.
+check: fmt-check lint complexity test spec-check
+
+# Historical alias for `check`, kept for the support template.
+verify: check
+
+# Install the guarded git hook.
+hooks:
+    git config --local core.hooksPath .githooks
+
+# Check the .agents/skills tree and its .claude/skills links.
+agent-files:
+    mise exec -- node scripts/agent-files.mjs
 
 # Prune remote-tracking refs and delete local branches merged into main.
 prune:
